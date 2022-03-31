@@ -1,23 +1,14 @@
 class Solution {
     
-    private static List<List<Integer>> adjList;
     public int[] findOrder(int n, int[][] prerequisites) {
         
-        adjList = new ArrayList<>();
+        List<List<Integer>> adjList = new ArrayList<>();
         for (int i = 0; i < n; i++) adjList.add(new ArrayList<>());
         int[] indegrees = new int[n];
         for (int[] prereq : prerequisites) {
             int a = prereq[0], b = prereq[1];
             adjList.get(b).add(a);
             indegrees[a]++;
-        }
-        
-        // check for cycles in graph
-        boolean[] visited = new boolean[n];
-        for (int i = 0; i < n; i++) {
-            boolean[] temp_visited = new boolean[n];
-            if (detectCycle(i, temp_visited, visited))
-                return new int[]{};
         }
         
         Queue<Integer> qq = new LinkedList<>();
@@ -39,22 +30,7 @@ class Solution {
             }
         }
         
+        if (idx != n) return new int[]{};
         return result;
-    }
-    
-    private static boolean detectCycle(int curr, boolean[] temp_visited, 
-                                       boolean[] visited) {
-        
-        if (temp_visited[curr]) return true;
-        if (visited[curr]) return false;
-        
-        temp_visited[curr] = true;
-        visited[curr] = true;
-        for (int x : adjList.get(curr)) {
-            if (detectCycle(x, temp_visited, visited)) return true;
-        }
-        
-        temp_visited[curr] = false;
-        return false;
     }
 }
