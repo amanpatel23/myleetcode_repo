@@ -28,10 +28,8 @@ class Solution {
     
     private static Node solve(Node curr_node, Map<Integer, Node> visited_nodes) {
         
-        int _val = curr_node.val;
-        ArrayList<Node> _neighbors = new ArrayList<>();
-        Node cloned_node = new Node(_val, _neighbors);
-        visited_nodes.put(_val, cloned_node);
+        Node cloned_node = new Node(curr_node.val, new ArrayList<>());
+        visited_nodes.put(curr_node.val, cloned_node);
         for (Node x : curr_node.neighbors) {
             if (visited_nodes.containsKey(x.val))
                 cloned_node.neighbors.add(visited_nodes.get(x.val));
